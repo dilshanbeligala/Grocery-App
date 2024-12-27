@@ -1,0 +1,25 @@
+name: grocery_store_app
+description: "A new Flutter project for a grocery store app."
+publish_to: 'none' # Prevents accidental publishing to pub.dev
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2 # For state management
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Declare your assets here
+  assets:
+    - assets/data/grocery_items.json
+    - assets/images/ # Include this for all image files
