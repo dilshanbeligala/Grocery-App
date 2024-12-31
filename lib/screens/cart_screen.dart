@@ -12,15 +12,13 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Your Cart',
+          'Cart',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor:Colors.teal.shade400,
-        elevation: 0,
+        elevation: 10,
       ),
       body: Column(
         children: [
-          // Cart items list
           Expanded(
             child: cartItems.isEmpty
                 ? const Center(
@@ -41,14 +39,14 @@ class CartScreen extends StatelessWidget {
                           ),
                           title: Text(
                             item.name,
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                           ),
                           subtitle: Text(
                             '\LKR ${item.price.toStringAsFixed(2)}',
                             style: TextStyle(color: Colors.green.shade700),
                           ),
                           trailing: IconButton(
-                            icon: Icon(Icons.remove_circle, color: Colors.red),
+                            icon: const Icon(Icons.remove_circle, color: Colors.red),
                             onPressed: () {
                               cartProvider.removeItem(item);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -65,7 +63,7 @@ class CartScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+
               border: Border(top: BorderSide(color: Colors.grey.shade300)),
             ),
             child: Column(
@@ -80,11 +78,11 @@ class CartScreen extends StatelessWidget {
                     ),
                     Text(
                       '\LKR ${cartProvider.total.toStringAsFixed(2)}',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green.shade700),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: cartItems.isEmpty
                       ? null
@@ -92,14 +90,17 @@ class CartScreen extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => CheckoutScreen()));
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal.shade400,
+                    backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                   child: const Text(
-                    'Proceed to Checkout',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    'Checkout',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                )
               ],
             ),
           ),

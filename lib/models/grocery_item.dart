@@ -16,6 +16,7 @@ class GroceryItem {
       id: json['id'],
       name: json['name'],
       price: json['price'],
+
       image: json['image'],
     );
   }

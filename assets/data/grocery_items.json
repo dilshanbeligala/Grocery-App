@@ -2,91 +2,91 @@
   {
     "id": 1,
     "name": "apple",
-    "price": 100,
+    "price": 100.0,
     "image": "assets/images/apple.jpg"
   },
   {
     "id": 2,
     "name": "Orange",
-    "price": 120,
+    "price": 120.0,
     "image": "assets/images/orange.jpeg"
   },
   {
     "id": 3,
     "name": "Cheese",
-    "price": 340,
+    "price": 340.0,
     "image": "assets/images/cheese.jpeg"
   },
   {
     "id": 4,
     "name": "Carrot",
-    "price": 90,
+    "price": 90.0,
     "image": "assets/images/carrot.jpeg"
   },
   {
     "id": 5,
     "name": "Yogurt",
-    "price": 150,
+    "price": 150.0,
     "image": "assets/images/yogurt.jpg"
   },
   {
     "id": 6,
     "name": "Strawberry",
-    "price": 275,
+    "price": 275.0,
     "image": "assets/images/strawberry.webp"
   },
   {
     "id": 7,
     "name": "Lettuce",
-    "price": 150,
+    "price": 150.0,
     "image": "assets/images/lettuce.webp"
   },
   {
     "id": 8,
     "name": "Tomato",
-    "price": 90,
+    "price": 90.0,
     "image": "assets/images/tomato.jpeg"
   },
   {
     "id": 9,
     "name": "Potato",
-    "price": 90,
+    "price": 90.0,
     "image": "assets/images/potato.webp"
   },
   {
     "id": 10,
     "name": "Chicken Breast",
-    "price": 1500,
+    "price": 1500.0,
     "image": "assets/images/Chicken Breast.webp"
   },
   {
     "id": 11,
     "name": "Cucumber",
-    "price":100,
+    "price":100.0,
     "image": "assets/images/cucumber.jpg"
   },
   {
     "id": 12,
     "name": "Pineapple",
-    "price": 180,
+    "price": 180.0,
     "image": "assets/images/pineapple.jpg"
   },
   {
     "id": 13,
     "name": "Grapes",
-    "price": 140,
+    "price": 140.0,
     "image": "assets/images/grapes.webp"
   },
   {
     "id": 14,
     "name": "Onion",
-    "price": 115,
+    "price": 115.0,
     "image": "assets/images/onion.jpeg"
   },
   {
     "id": 15,
     "name": "Lemon",
-    "price": 160,
+    "price": 160.0,
     "image": "assets/images/lemon.jpg"
   }
 ]

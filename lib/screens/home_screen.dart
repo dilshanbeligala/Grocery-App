@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import '../models/grocery_item.dart';
-import '../widgets/grocery_item_card.dart';
 import 'cart_screen.dart';
+import '../providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,117 +12,193 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<GroceryItem> _items = [];
-
-  /// Fetch grocery items from the JSON file
-  Future<void> _fetchItems() async {
-    try {
-      final data = await DefaultAssetBundle.of(context).loadString('assets/data/grocery_items.json');
-      final List<dynamic> jsonResult = json.decode(data);
-      setState(() {
-        _items = jsonResult.map((item) => GroceryItem.fromJson(item)).toList();
-      });
-    } catch (e) {
-      print('Error loading JSON data: $e');
-    }
-  }
+  List<GroceryItem> items = [];
+  List<dynamic> foodCategories = ["Fruits", "Vegetables", "Snacks", "Dairy"];
 
   @override
   void initState() {
     super.initState();
-    _fetchItems(); // Load grocery items at startup
+    _loadItems();
+  }
+
+  Future<void> _loadItems() async {
+    final data = await rootBundle.loadString('assets/data/grocery_items.json');
+    final List<dynamic> jsonResult = jsonDecode(data);
+    setState(() {
+      items = jsonResult.map((e) => GroceryItem.fromJson(e)).toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true, // Center the title
-        title: Text(
-          'Grocery Store',
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.0,
-          ),
+        title: const Text(
+          'Fresh Harvest Market',
+          style: TextStyle(fontSize: 25, color: Colors.green),
         ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.teal.shade400, Colors.teal.shade600],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
           ),
-        ),
+        ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Search bar and welcome message
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
               children: [
                 Text(
-                  'Explore Fresh Grocery Items!',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal.shade900,
-                  ),
+                  'Hello',
+                  style: TextStyle(fontSize: 25, ),
                 ),
-                SizedBox(height: 12),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search items...',
-                    prefixIcon: Icon(Icons.search, color: Colors.teal.shade600),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.teal.shade50,
-                    contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  ),
+                SizedBox(width: 8),
+                Icon(
+                  Icons.waving_hand,
+                  size: 25,
+                  color: Colors.orange,
                 ),
               ],
             ),
           ),
-          // Display items in a grid
-          Expanded(
-            child: _items.isEmpty
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.teal.shade600,
+          SizedBox(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: foodCategories.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.green, width: 2),
                     ),
-                  )
-                : GridView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.8,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
+                    alignment: Alignment.center,
+                    child: Text(
+                      foodCategories[index],
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    itemCount: _items.length,
-                    itemBuilder: (ctx, index) => GroceryItemCard(item: _items[index]),
                   ),
+                );
+              },
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Promotions',
+              style: TextStyle(fontSize: 25, ),
+            ),
+          ),
+          SizedBox(
+            height: 200, // Height for the horizontal ListView
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: foodCategories.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Container(
+                    width: 300,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    // alignment: Alignment.center,
+                    child: Image.asset("assets/images/promotion.jpg"),
+
+                  ),
+                );
+              },
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Items',
+                  style: TextStyle(fontSize: 25, ),
+                ),
+                Text(
+                  'See all..',
+                  style: TextStyle(fontSize: 13, ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(8.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 0.75,
+              ),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          item.image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              item.name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '\$${item.price.toStringAsFixed(2)}',
+                              style:
+                              const TextStyle(color: Colors.green, fontSize: 14),
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton(
+                              onPressed: () {
+                                Provider.of<CartProvider>(context, listen: false)
+                                    .addItem(item);
+                              },
+                              child: const Text('Add +'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (ctx) => CartScreen()),
-          );
-        },
-        backgroundColor: Colors.teal.shade600,
-        child: Icon(Icons.shopping_cart, size: 28),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -15,11 +15,10 @@ class CheckoutScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Checkout',
+        title: const Text(
+          'Summery',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.teal.shade400,
         elevation: 0,
       ),
       body: Padding(
@@ -28,74 +27,74 @@ class CheckoutScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Order Summary Header
-              Text(
-                'Order Summary',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              // Cart Items Summary
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: cartItems.isEmpty
-                    ? Center(
-                        child: Text(
-                          'No items in the cart!',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                      )
-                    : Column(
-                        children: cartItems.map((item) {
-                          return ListTile(
-                            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage(item.image),
-                              radius: 25,
-                            ),
-                            title: Text(
-                              item.name,
-                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                            subtitle: Text(
-                              'Price: \LKR ${item.price.toStringAsFixed(2)}',
-                              style: TextStyle(color: Colors.teal.shade400),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-              ),
-              SizedBox(height: 16),
-              // Divider
-              Divider(),
-              // Total Price
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+
+              Column(
                 children: [
-                  Text(
-                    'Total:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '\LKR ${cartProvider.total.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green.shade700,
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                    child: cartItems.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'No items in the cart!',
+                              style: TextStyle(fontSize: 16, color: Colors.grey),
+                            ),
+                          )
+                        : Column(
+                            children: cartItems.map((item) {
+                              return ListTile(
+                                contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                leading: CircleAvatar(
+                                  backgroundImage: AssetImage(item.image),
+                                  radius: 25,
+                                ),
+                                title: Text(
+                                  item.name,
+                                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                                ),
+                                subtitle: Text(
+                                  'Price: \LKR ${item.price.toStringAsFixed(2)}',
+
+                                ),
+                              );
+                            }).toList(),
+
+                          ),
+
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Total:',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '\LKR ${cartProvider.total.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              // Checkout Form
-              Text(
-                'Enter Your Details',
+              const SizedBox(height: 16),
+
+
+
+              const Text(
+                'Enter Delevery Details',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Form(
                 key: _formKey,
                 child: Column(
@@ -105,7 +104,7 @@ class CheckoutScreen extends StatelessWidget {
                       controller: _nameController,
                       decoration: InputDecoration(
                         labelText: 'Name',
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -117,13 +116,13 @@ class CheckoutScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     // Address Field
                     TextFormField(
                       controller: _addressController,
                       decoration: InputDecoration(
                         labelText: 'Address',
-                        prefixIcon: Icon(Icons.location_on),
+                        prefixIcon: const Icon(Icons.location_on),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -135,17 +134,18 @@ class CheckoutScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     // Phone Field
                     TextFormField(
                       controller: _phoneController,
                       decoration: InputDecoration(
                         labelText: 'Phone Number',
-                        prefixIcon: Icon(Icons.phone),
+                        prefixIcon: const Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
+
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -154,7 +154,7 @@ class CheckoutScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 200),
                     // Place Order Button
                     ElevatedButton(
                       onPressed: () {
@@ -178,12 +178,12 @@ class CheckoutScreen extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:Colors.teal.shade400,
+                        backgroundColor:Colors.green,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        shadowColor:Colors.teal.shade400,
+
                         elevation: 5,
                       ),
                       child: const Row(
@@ -193,7 +193,7 @@ class CheckoutScreen extends StatelessWidget {
                           SizedBox(width: 8),
                           Text(
                             'Place Order',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black),
                           ),
                         ],
                       ),
